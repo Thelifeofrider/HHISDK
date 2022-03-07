@@ -51,6 +51,8 @@ public struct HHISDK: View {
                         navigationBackhide = true
                         firmwareViewModel.nextStep()
                         if firmwareViewModel.shouldDismissView() {
+                            NotificationCenter.default.post(name: NSNotification.updateFirmware,
+                                                                            object: nil, userInfo: ["info": "Test"])
                             presentationMode.wrappedValue.dismiss()
                         }
                     }) {
@@ -93,4 +95,7 @@ struct HHISDK_Previews: PreviewProvider {
     static var previews: some View {
         HHISDK(firmwareViewModel: HHISDK.HHIFirmwareViewModel.init(firmeWareModel: FirmWareModel(currentVersion: "1.0", updatingVersion: "2.0", firmwareProgress: .instruction)))
     }
+}
+extension NSNotification {
+    static let updateFirmware = Notification.Name.init("UpdateFirmWare")
 }
